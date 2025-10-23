@@ -1,0 +1,22 @@
+{
+  "name": "betapp",
+  "version": "1.0.0",
+  "description": "Sistema de apuestas democráticas entre amigos con notificaciones por email",
+  "scripts": {
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "start:all": "npm run start:backend & npm run start:frontend",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "test:e2e": "node test-e2e.js",
+    "db:reset": "rm -f backend/bets.db && cd backend && node database.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "author": "BetApp",
+  "license": "MIT"
+}

@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: App
+metadata:
+  name: betapp-backend
+spec:
+  source:
+    git:
+      url: https://github.com/RickAndMe/CuadriBet.git
+      branch: main
+    directory: /backend
+  services:
+    - name: api
+      source:
+        dockerfile: Dockerfile
+      ports:
+        - 8000
+      env:
+        - name: NODE_ENV
+          value: production
+        - name: PORT
+          value: 8000
+        - name: JWT_SECRET
+          value: mi_clave_segura_para_jwt243
+        - name: EMAIL_USER
+          value: tu_email@gmail.com
+        - name: EMAIL_PASS
+          value: tu_app_password
+        - name: DATABASE_NAME
+          value: bets.db
+  routes:
+    - match: /
+      redirect: https://api-{app-id}.koyeb.app
