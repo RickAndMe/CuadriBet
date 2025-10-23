@@ -164,14 +164,14 @@ router.get('/group/:groupId', authenticateToken, (req, res) => {
             SELECT
                 b.id, b.description, b.deadline, b.stake, b.status, b.result, b.created_at, b.completed_at, b.emoji,
                 u.username as creator_name,
-                u.id = ? as is_creator,
+                COALESCE(u.id = ?, 0) as is_creator,
                 COUNT(bv.user_id) as total_votes,
                 (SELECT COUNT(*) FROM group_members WHERE group_id = b.group_id) as potential_voters
             FROM bets b
             LEFT JOIN users u ON b.created_by = u.id
             LEFT JOIN bet_votes bv ON b.id = bv.bet_id
             WHERE b.group_id = ?
-            GROUP BY b.id
+            GROUP BY b.id, b.description, b.deadline, b.stake, b.status, b.result, b.created_at, b.completed_at, b.emoji, u.username, u.id
             ORDER BY b.created_at DESC
         `;
 
