@@ -57,6 +57,9 @@ const Dashboard: React.FC = () => {
                 <Link
                   key={group.id}
                   to={`/group/${group.id}`}
+                  onClick={(e) => {
+                    console.log('Clicking group:', group.id, group.name);
+                  }}
                   className="block p-4 border border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-md transition-colors"
                 >
                   <h4 className="font-semibold text-gray-900">{group.name}</h4>
