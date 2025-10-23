@@ -7,29 +7,37 @@ const Dashboard: React.FC = () => {
   const [pendingBets, setPendingBets] = useState<Bet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const loadDashboardData = async () => {
-      try {
-        const groupsResponse = await groups.getAll();
-        setUserGroups(groupsResponse.data.groups);
+  const loadDashboardData = async () => {
+    console.log('Loading dashboard data...');
+    try {
+      const groupsResponse = await groups.getAll();
+      console.log('Groups API response:', groupsResponse.data);
+      setUserGroups(groupsResponse.data.groups || []);
 
-        // Load bets for the first group if any
-        if (groupsResponse.data.groups.length > 0) {
-          try {
-            const betsResponse = await bets.getForGroup(groupsResponse.data.groups[0].id);
-            setPendingBets(betsResponse.data.bets?.filter((bet: Bet) => bet.status === 'pending') || []);
-          } catch (betsError) {
-            console.error('Error loading pending bets:', betsError);
-            setPendingBets([]); // Set empty array on error
-          }
+      // Load bets for the first group if any
+      if (groupsResponse.data.groups?.length > 0) {
+        try {
+          const betsResponse = await bets.getForGroup(groupsResponse.data.groups[0].id);
+          console.log('Bets API response:', betsResponse.data);
+          setPendingBets(betsResponse.data.bets?.filter((bet: Bet) => bet.status === 'pending') || []);
+        } catch (betsError) {
+          console.error('Error loading pending bets:', betsError);
+          setPendingBets([]); // Set empty array on error
         }
-      } catch (error) {
-        console.error('Error loading dashboard data:', error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        console.log('No groups found');
+        setPendingBets([]);
       }
-    };
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+      setUserGroups([]);
+      setPendingBets([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadDashboardData();
   }, []);
 
@@ -48,7 +56,19 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="px-4 py-6 sm:px-0">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <button
+          onClick={() => {
+            setIsLoading(true);
+            loadDashboardData();
+          }}
+          disabled={isLoading}
+          className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+        >
+          🔄 Actualizar
+        </button>
+      </div>
 
       {/* Grupos del usuario */}
       <div className="bg-white overflow-hidden shadow rounded-lg mb-8">
