@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { groups, Group } from '../api/api';
 
 const Groups: React.FC = () => {
+  const navigate = useNavigate();
   const [groupName, setGroupName] = useState('');
   const [inviteCode, setInviteCode] = useState('');
   const [userGroups, setUserGroups] = useState<Group[]>([]);
@@ -16,6 +18,8 @@ const Groups: React.FC = () => {
       const response = await groups.create({ name: groupName });
       setUserGroups([...userGroups, response.data.group]);
       setGroupName('');
+      // Redirect to the newly created group
+      navigate(`/groups/${response.data.group.id}`);
     } catch (error) {
       alert('Error al crear grupo');
     } finally {

@@ -50,6 +50,15 @@ const GroupDetail: React.FC = () => {
     );
   }
 
+  const copyInviteCode = async () => {
+    try {
+      await navigator.clipboard.writeText(group.invite_code);
+      alert('Código copiado al portapapeles!');
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   return (
     <div className="px-4 py-6 sm:px-0">
       <div className="flex justify-between items-start mb-8">
@@ -70,6 +79,35 @@ const GroupDetail: React.FC = () => {
           >
             Crear Apuesta
           </Link>
+        </div>
+      </div>
+
+      {/* Código de Invitación */}
+      <div className="bg-white overflow-hidden shadow rounded-lg mb-8">
+        <div className="px-4 py-5 sm:p-6">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4 flex items-center">
+            <span className="mr-2">📋</span>
+            Código de Invitación
+          </h3>
+          <div className="flex items-center space-x-4">
+            <div className="flex-1">
+              <input
+                type="text"
+                value={group.invite_code}
+                readOnly
+                className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-900 font-mono text-center text-lg tracking-wider"
+              />
+            </div>
+            <button
+              onClick={copyInviteCode}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+              Copiar
+            </button>
+          </div>
+          <p className="mt-2 text-sm text-gray-600">
+            Comparte este código con tus amigos para que puedan unirse al grupo.
+          </p>
         </div>
       </div>
 
