@@ -19,7 +19,7 @@ const Groups: React.FC = () => {
       setUserGroups([...userGroups, response.data.group]);
       setGroupName('');
       // Redirect to the newly created group
-      navigate(`/groups/${response.data.group.id}`);
+      navigate(`/group/${response.data.group.id}`);
     } catch (error) {
       alert('Error al crear grupo');
     } finally {
