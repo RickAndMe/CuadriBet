@@ -47,7 +47,7 @@ const Groups: React.FC = () => {
     <div className="px-4 py-6 sm:px-0">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Grupos</h1>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 sm:gap-8 sm:grid-cols-1 md:grid-cols-2">
         {/* Crear Grupo */}
         <div className="bg-white overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">

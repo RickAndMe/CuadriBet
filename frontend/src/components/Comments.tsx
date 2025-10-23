@@ -60,22 +60,22 @@ const Comments: React.FC<CommentsProps> = ({ betId }) => {
 
       {/* Add Comment Form */}
       <form onSubmit={handleSubmitComment} className="mb-6">
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Escribe un comentario..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-base"
             maxLength={500}
             disabled={isSubmitting}
           />
           <button
             type="submit"
             disabled={isSubmitting || !newComment.trim()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed text-base font-medium"
           >
-            {isSubmitting ? '...' : '💬'}
+            {isSubmitting ? 'Enviando...' : '💬 Enviar'}
           </button>
         </div>
         <p className="text-xs text-gray-500 mt-1">

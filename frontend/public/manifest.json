@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "BetApp",
+  "name": "BetApp - Apuestas entre Amigos",
   "icons": [
     {
       "src": "favicon.ico",
