@@ -15,8 +15,13 @@ const Dashboard: React.FC = () => {
 
         // Load bets for the first group if any
         if (groupsResponse.data.groups.length > 0) {
-          const betsResponse = await bets.getForGroup(groupsResponse.data.groups[0].id);
-          setPendingBets(betsResponse.data.bets.filter((bet: Bet) => bet.status === 'pending'));
+          try {
+            const betsResponse = await bets.getForGroup(groupsResponse.data.groups[0].id);
+            setPendingBets(betsResponse.data.bets?.filter((bet: Bet) => bet.status === 'pending') || []);
+          } catch (betsError) {
+            console.error('Error loading pending bets:', betsError);
+            setPendingBets([]); // Set empty array on error
+          }
         }
       } catch (error) {
         console.error('Error loading dashboard data:', error);
