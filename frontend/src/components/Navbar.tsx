@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center justify-between w-full">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">BetApp</h1>
+              <h1 className="text-xl font-bold text-gray-900">CuadriBET</h1>
             </div>
 
             {/* Desktop Navigation */}

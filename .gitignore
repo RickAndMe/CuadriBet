@@ -66,6 +66,12 @@ bets.db
 database.db
 local.db
 
+# Database backups (mantener locales, no subir a git)
+backend/backups/
+backups/
+**backups/
+*.backup
+
 # React app specific
 frontend/node_modules/
 frontend/build/

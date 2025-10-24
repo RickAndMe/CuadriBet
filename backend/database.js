@@ -1,16 +1,56 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
-const DATABASE_PATH = path.join(__dirname, process.env.DATABASE_NAME || 'bets.db');
+// Configuración robusta de base de datos para diferentes entornos
+const DATABASE_CONFIG = {
+    // Desarrollo: SQLite persistente en archivo
+    development: {
+        type: 'sqlite',
+        filename: path.join(__dirname, process.env.DATABASE_NAME || 'bets.db'),
+        options: { verbose: true }
+    },
 
-const db = new sqlite3.Database(DATABASE_PATH, (err) => {
-    if (err) {
-        console.error('Error opening database:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-        initializeDatabase();
+    // Producción: usar variables de entorno o configuración específica
+    production: {
+        type: process.env.DATABASE_TYPE || 'sqlite',
+        filename: process.env.DATABASE_PATH || path.join(__dirname, 'production.db'),
+        postgresql: {
+            host: process.env.PG_HOST || 'localhost',
+            port: process.env.PG_PORT || 5432,
+            database: process.env.PG_DATABASE || 'cuadribet_prod',
+            username: process.env.PG_USER,
+            password: process.env.PG_PASSWORD,
+            ssl: process.env.PG_SSL === 'true' ? { rejectUnauthorized: false } : false
+        },
+        mysql: {
+            host: process.env.MYSQL_HOST || 'localhost',
+            port: process.env.MYSQL_PORT || 3306,
+            database: process.env.MYSQL_DATABASE || 'cuadribet_prod',
+            username: process.env.MYSQL_USER,
+            password: process.env.MYSQL_PASSWORD
+        }
     }
-});
+};
+
+const config = DATABASE_CONFIG[process.env.NODE_ENV || 'development'];
+
+// Inicializar base de datos según configuración
+let db;
+
+if (config.type === 'sqlite') {
+    db = new sqlite3.Database(config.filename, (err) => {
+        if (err) {
+            console.error('❌ Error opening SQLite database:', err.message);
+            process.exit(1);
+        } else {
+            console.log(`✅ Connected to SQLite database: ${config.filename}`);
+            initializeDatabase();
+        }
+    });
+} else {
+    console.error('❌ Database type not supported in configuration');
+    process.exit(1);
+}
 
 // Enable foreign key constraints
 db.run('PRAGMA foreign_keys = ON');
@@ -59,6 +99,7 @@ function initializeDatabase() {
             result TEXT CHECK(result IN ('won', 'lost', NULL)),
             completed_at DATETIME,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            emoji TEXT,
             FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
             FOREIGN KEY (created_by) REFERENCES users(id)
         )`,

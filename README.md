@@ -1,4 +1,4 @@
-# BetApp - Sistema de Apuestas entre Amigos
+# CuadriBET - Sistema de Apuestas entre Amigos
 
 Aplicación web completa para gestionar apuestas democráticas entre grupos de amigos con notificaciones automáticas por email.
 
@@ -12,6 +12,35 @@ Aplicación web completa para gestionar apuestas democráticas entre grupos de a
 - ✅ **Resolución de Apuestas** por el creador
 - ✅ **Scheduler Automático** cada hora para verificar fechas límite
 - ✅ **UI Moderna** con Tailwind CSS
+- ✅ **Persistencia Completa de Datos** en local y producción
+
+## 🗄️ Persistencia de Datos
+
+### **En Desarrollo/Local:**
+- ✅ **SQLite persistente** como archivo `bets.db`
+- ✅ **Datos conservados** entre reinicios del servidor
+- ✅ **Archivo localizado** en `backend/bets.db`
+
+### **En Producción:**
+- ✅ **Configuraciones para PostgreSQL/MySQL** según plataforma
+- ✅ **Variables de entorno** para conexión segura
+- ✅ **Soporte para múltiples proveedores** de BD
+
+### **Backups y Recuperación:**
+
+```bash
+# Crear backup instantáneo
+npm run backup-db backup
+
+# Listar backups disponibles
+npm run backup-db list
+
+# Restaurar desde backup específico
+npm run backup-db restore 1
+
+# Información completa del sistema
+npm run backup-db info
+```
 
 ## 🛠️ Tecnologías
 
@@ -239,6 +268,6 @@ MIT License - ver LICENSE para más detalles.
 
 ---
 
-**¡BetApp está listo para usar! 🚀**
+**¡CuadriBET está listo para usar! 🚀**
 
 Creado con ❤️ para gestionar apuestas democráticas entre amigos.

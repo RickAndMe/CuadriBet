@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Script de testing end-to-end para BetApp
+ * Script de testing end-to-end para CuadriBET
  * Ejecuta pruebas automatizadas de las principales funcionalidades
  */
 
@@ -10,7 +10,7 @@ const axios = require('axios');
 const API_BASE_URL = 'http://localhost:8000/api';
 let authToken = null;
 
-console.log('🧪 BetApp - Testing End-to-End\n');
+console.log('🧪 CuadriBET - Testing End-to-End\n');
 
 // Funciones auxiliares
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -176,7 +176,7 @@ async function runTests() {
 
   if (passed === total) {
     console.log('🎉 Todos los tests pasaron exitosamente!');
-    console.log('\n🚀 BetApp está funcionando correctamente.');
+    console.log('\n🚀 CuadriBET está funcionando correctamente.');
     console.log('\n📱 Puedes abrir:');
     console.log('- Frontend: http://localhost:3001');
     console.log('- API Docs: http://localhost:8000/api/health');

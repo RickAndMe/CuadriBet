@@ -66,11 +66,12 @@ router.post('/join', authenticateToken, (req, res) => {
         return res.status(400).json({ error: error.details[0].message });
     }
 
-    const { code } = value.toUpperCase();
+    const { code } = value;
+    const upperCode = code.toUpperCase();
     const userId = req.userId;
 
     // Find group by invite code
-    db.get('SELECT id, name FROM groups WHERE invite_code = ?', [code], (err, group) => {
+    db.get('SELECT id, name FROM groups WHERE invite_code = ?', [upperCode], (err, group) => {
         if (err) {
             return res.status(500).json({ error: 'Database error' });
         }

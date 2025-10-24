@@ -1,5 +1,5 @@
 {
-  "name": "betapp",
+  "name": "cuadribet",
   "version": "1.0.0",
   "description": "Sistema de apuestas democráticas entre amigos con notificaciones por email",
   "scripts": {
@@ -11,12 +11,16 @@
     "start:frontend": "cd frontend && npm start",
     "build:frontend": "cd frontend && npm run build",
     "test:e2e": "node test-e2e.js",
-    "db:reset": "rm -f backend/bets.db && cd backend && node database.js"
+    "db:reset": "rm -f backend/bets.db && cd backend && node database.js",
+    "backup-db": "cd backend && node backup-db.js",
+    "backup-db-auto": "cd backend && node backup-db.js auto",
+    "backup-db-list": "cd backend && node backup-db.js list",
+    "backup-db-restore": "cd backend && node backup-db.js restore"
   },
   "repository": {
     "type": "git",
     "url": "."
   },
-  "author": "BetApp",
+  "author": "CuadriBET",
   "license": "MIT"
 }
